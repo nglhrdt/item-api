@@ -21,24 +21,24 @@ public class ItemsController implements ItemsApi {
     ItemService itemService;
 
     @Override
-    public ResponseEntity<List<ItemDto>> itemsGet(@Max(100) @Valid Integer limit) {
+    public ResponseEntity<List<ItemDto>> getItems(@Max(100) @Valid Integer limit) {
         return new ResponseEntity<>(itemService.findAll().stream().map(this::domainToApi).collect(Collectors.toList()),
                 HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<ItemDto> itemsPost(@Valid ItemDto item) {
+    public ResponseEntity<ItemDto> createItem(@Valid ItemDto item) {
         final Item domainItem = itemService.createItem(apiToDomain(item));
         return new ResponseEntity<>(domainToApi(domainItem), HttpStatus.CREATED);
     }
 
     @Override
-    public ResponseEntity<ItemDto> itemsIdGet(String id) {
+    public ResponseEntity<ItemDto> getItemById(String id) {
         return new ResponseEntity<ItemDto>(domainToApi(itemService.findById(id)), HttpStatus.OK);
     }
 
     @Override
-    public ResponseEntity<Void> itemsIdDelete(String id) {
+    public ResponseEntity<Void> deleteItemById(String id) {
         itemService.deleteById(id);
         return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }

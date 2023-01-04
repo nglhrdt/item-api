@@ -2,10 +2,13 @@ openapi: "3.0.2"
 info:
   title: item staorage management
   version: 0.0.1
+servers:
+  - url: http://localhost:8080/api
 paths:
   /items:
     get:
       summary: List all items
+      operationId: getItems
       parameters:
         - name: limit
           schema:
@@ -29,6 +32,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     post:
       summary: Create an item
+      operationId: createItem
       requestBody:
         content:
           application/json:
@@ -39,7 +43,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Item'
           description: successfully created the item
         default:
@@ -58,20 +61,19 @@ paths:
           type: string
     get:
       summary: Info for a specific item
+      operationId: getItemById
       responses:
         '200':
           description: the item for the given id
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Item'
         '404':
           description: the given id does not exist
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Error'
         default:
           description: Unexpected error
@@ -81,6 +83,7 @@ paths:
                 $ref: '#/components/schemas/Error'
     delete:
       description: 'delete the given item'
+      operationId: deleteItemById
       responses:
         '204':
           description: deletion successfull
@@ -89,7 +92,6 @@ paths:
           content:
             application/json:
               schema:
-                type: object
                 $ref: '#/components/schemas/Error'
         default:
           description: Unexpected error
