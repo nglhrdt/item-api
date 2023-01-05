@@ -37,7 +37,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/Item'
+              $ref: '#/components/schemas/CreateItem'
       responses:
         '201':
           content:
@@ -109,6 +109,13 @@ components:
       properties:
         id:
           type: string
+        name:
+          type: string
+    CreateItem:
+      type: object
+      required:
+        - name
+      properties:
         name:
           type: string
     Error:

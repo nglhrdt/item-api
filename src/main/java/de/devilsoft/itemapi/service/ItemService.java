@@ -7,6 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import de.devilsoft.itemapi.domain.Item;
+import de.devilsoft.itemapi.model.CreateItem;
 import de.devilsoft.itemapi.model.ItemModel;
 import de.devilsoft.itemapi.repository.ItemRepository;
 
@@ -27,8 +28,8 @@ public class ItemService {
         return modelToDomain(itemRepository.findById(id).get());
     }
 
-    public Item createItem(Item item) {
-        final ItemModel itemModel = itemRepository.save(domainToModel(item));
+    public Item createItem(CreateItem item) {
+        final ItemModel itemModel = itemRepository.save(new ItemModel(null, item.getName()));
         return modelToDomain(itemModel);
     }
 

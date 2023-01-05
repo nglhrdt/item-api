@@ -6,16 +6,22 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 import de.devilsoft.itemapi.api.ItemsApi;
 import de.devilsoft.itemapi.domain.Item;
+import de.devilsoft.itemapi.model.CreateItem;
+import de.devilsoft.itemapi.model.CreateItemDto;
 import de.devilsoft.itemapi.model.ItemDto;
 import de.devilsoft.itemapi.service.ItemService;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.Max;
 
 @RestController
+@CrossOrigin("http://localhost:4200")
+@RequestMapping("/api")
 public class ItemsController implements ItemsApi {
     @Autowired
     ItemService itemService;
@@ -27,7 +33,7 @@ public class ItemsController implements ItemsApi {
     }
 
     @Override
-    public ResponseEntity<ItemDto> createItem(@Valid ItemDto item) {
+    public ResponseEntity<ItemDto> createItem(@Valid CreateItemDto item) {
         final Item domainItem = itemService.createItem(apiToDomain(item));
         return new ResponseEntity<>(domainToApi(domainItem), HttpStatus.CREATED);
     }
@@ -50,7 +56,7 @@ public class ItemsController implements ItemsApi {
         return item;
     }
 
-    private Item apiToDomain(ItemDto item) {
-        return new Item(item.getId(), item.getName());
+    private CreateItem apiToDomain(CreateItemDto item) {
+        return new CreateItem(item.getName());
     }
 }
